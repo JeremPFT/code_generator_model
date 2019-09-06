@@ -1,0 +1,10 @@
+#+TITLE:	README for Code Generator project, Model module
+#+AUTHOR:	Jeremy PIffret
+#+EMAIL:	j.piffret@gmail.com
+#+DATE:		2019-09-06
+#+STARTUP:	content
+
+* Brief
+
+Model module defines the objects used as abstraction to generate a project from
+a specification.
