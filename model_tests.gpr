@@ -1,0 +1,37 @@
+with "../common/shared.gpr";
+
+project Model_Tests is
+
+  for Create_Missing_Dirs use "True";
+
+  Src_Dirs := ();
+  Src_Dirs := Src_Dirs & "./src_tests";
+
+  Src_Dirs := Src_Dirs & "./src_lib";
+
+  Src_Dirs := Src_Dirs & "../utils_assertions/src";
+
+  Src_Dirs := Src_Dirs & "../aunit/include/aunit/framework";
+  Src_Dirs := Src_Dirs & "../aunit/include/aunit/containers";
+  Src_Dirs := Src_Dirs & "../aunit/include/aunit/reporters";
+  Src_Dirs := Src_Dirs & "../aunit/include/aunit/framework";
+  Src_Dirs := Src_Dirs & "../aunit/include/aunit/framework/zfpexception";
+  Src_Dirs := Src_Dirs & "../aunit/include/aunit/framework/calendar";
+  Src_Dirs := Src_Dirs & "../aunit/include/aunit/framework/nativememory";
+
+  for Source_Dirs use Src_Dirs;
+
+  Excl_Src_Lst := ();
+  for Excluded_Source_Files use Excl_Src_Lst;
+
+  for Object_Dir use Shared.Object_Dir;
+  for Library_Dir use Shared.Library_Dir;
+  for Exec_Dir use Shared.Exec_Dir;
+
+  for Main use ("model-tests-run.adb");
+
+  package Compiler renames Shared.Compiler;
+
+  package Builder renames Shared.Builder;
+
+end Model_Tests;

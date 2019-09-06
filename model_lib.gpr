@@ -1,0 +1,24 @@
+with "../common/shared.gpr";
+
+library project Model_Lib is
+
+  for Create_Missing_Dirs use "True";
+
+  Src_Lst := ();
+  Src_Lst := Src_Lst & "./src_lib";
+  for Source_Dirs use Src_Lst;
+
+  Exc_Src_Lst := ();
+  for Excluded_Source_Files use Exc_Src_Lst;
+
+  for Object_Dir use Shared.Object_Dir;
+  for Library_Dir use Shared.Library_Dir;
+
+  for Library_Name use "code_generator_model";
+  for Library_Kind use "static";
+
+  package Compiler renames Shared.Compiler;
+
+  package Builder renames Shared.Builder;
+
+end Model_Lib;
