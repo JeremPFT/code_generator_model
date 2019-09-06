@@ -3,7 +3,7 @@ with Ada.Text_IO;
 
 package Model is
 
-   type String_Access is access all String;
+   type String_Access_T is access all String;
 
    package Dbg renames Ada.Text_IO;
    package T_IO renames Ada.Text_IO;
@@ -17,5 +17,6 @@ package Model is
    Out_Of_Bound : exception;
    --  raised by Get_Comment when Index > Number_Of_Comments
    --  raised by Get_Owned_Element when Index > Number_Of_Owned_Elements
-   --------------------------------------------------------------------------------
+   ----------------------------------------------------------------------------
+
 end Model;

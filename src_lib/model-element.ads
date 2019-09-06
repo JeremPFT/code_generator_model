@@ -3,7 +3,6 @@ limited with Model.Comment;
 
 with Model.Types.Element; use Model.Types.Element;
 with Model.Types.Comment; use Model.Types.Comment;
-with Model.Types.Namespace; use Model.Types.Namespace;
 
 package Model.Element is
 
@@ -152,7 +151,7 @@ package Model.Element is
    not overriding
    function Get_Owner
      (Self  : in Object_T)
-     return not null access Object_T'Class;
+     return not null access constant Object_T'Class;
 
    pragma Precondition (Self.Has_Owner);
 
@@ -192,8 +191,6 @@ package Model.Element is
 private
 
    type Object_T is abstract tagged record
-      Namespace_Associated : Namespace_Class_T;
-
       Owned_Comments : Comment_Vector_T
         := Comment_Vectors.Empty_Vector;
 

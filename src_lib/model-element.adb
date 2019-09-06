@@ -80,7 +80,7 @@ package body Model.Element is
    function Owns_Comment
      (Self    : in              Object_T;
       Comment : not null access constant Model.Comment.Object_T'Class)
-   return Boolean
+     return Boolean
    is
    begin
       return Self.Owned_Comments.Contains (Comment);
@@ -94,7 +94,7 @@ package body Model.Element is
    function Owns_Element
      (Self    : in              Object_T;
       Element : not null access constant Object_T'Class)
-   return Boolean
+     return Boolean
    is
    begin
       return Self.Owned_Elements.Contains (Element);
@@ -121,7 +121,7 @@ package body Model.Element is
 
    function Get_Owner
      (Self  : in Object_T)
-     return not null access Object_T'Class
+     return not null access constant Object_T'Class
    is
    begin
       return Self.Owner;

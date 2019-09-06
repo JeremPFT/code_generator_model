@@ -1,8 +1,9 @@
-with Ada.Exceptions;
 with AUnit.Assertions; use AUnit.Assertions;
 
 with Model.Comment;
 with Model.Types.Comment;
+
+with Error_Expected;
 
 package body Model.Element.Tests is
 
@@ -77,14 +78,14 @@ package body Model.Element.Tests is
          Comment := Test.Fixture.Get_Comment (Index => 1);
          pragma Warnings (On, "assigned but never");
       exception
-        when E: others =>
+        when E : others =>
            Error_Found := True;
-           T_IO.Put_Line (Ada.Exceptions.Exception_Information (E));
-           T_IO.Put_Line ("expected error from "
-                            & "model-element-tests.adb::Test_Get_Comment_Out_Of_Bound");
+           Error_Expected (Error      => E,
+                           File       => "model-element-tests.adb",
+                           Subprogram => "Test_Get_Comment_Out_Of_Bound");
       end;
 
       Assert (Error_Found, "no raised error");
-      end Test_Get_Comment_Out_Of_Bound;
+   end Test_Get_Comment_Out_Of_Bound;
 
 end Model.Element.Tests;

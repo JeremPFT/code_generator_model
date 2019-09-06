@@ -12,13 +12,13 @@ package Model.Named_Element is
 
    package Parent_Pkg renames Model.Element;
 
+   type Object_T is abstract new Parent_Pkg.Object_T with private;
+
    type Visibility_T is (Visibility_None,
                          Visibility_Private,
                          Visibility_Protected,
                          Visibility_Public,
                          Visibility_Package);
-
-   type Object_T is abstract new Parent_Pkg.Object_T with private;
 
    -----------------------------------------------------------------------------
    --  initilization
@@ -89,7 +89,8 @@ private
 
    type Object_T is abstract new Parent_Pkg.Object_T
    with record
-      Name      : String_Access                         := null;
+      --  Name      : String_Access_T                       := null;
+      Name      : access String                         := null;
       Namespace : access Model.Namespace.Object_T'Class := null;
    end record;
 

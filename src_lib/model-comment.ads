@@ -122,11 +122,11 @@ private
 
    type Object_T is new Model.Element.Object_T
    with record
-      Text   : String_Access := null;
-      Header : String_Access := null;
-      Footer : String_Access := null;
-      Prefix : String_Access := null;
-      Suffix : String_Access := null;
+      Text   : String_Access_T := null;
+      Header : String_Access_T := null;
+      Footer : String_Access_T := null;
+      Prefix : String_Access_T := null;
+      Suffix : String_Access_T := null;
 
       Annotated_Elements : Element_Vector_T := Element_Vectors.Empty_Vector;
    end record;

@@ -9,7 +9,11 @@ package body Model.Named_Element is
       Name : in     String := "")
    is
    begin
-      Self.Name := new String'(Name);
+      declare
+         String_Object : constant String_Access_T := new String'(Name);
+      begin
+         Self.Name := String_Object;
+      end;
    end Initialize;
 
    --------------------------
@@ -33,7 +37,7 @@ package body Model.Named_Element is
    function Has_Namespace
      (Self : in Object_T)
      return Boolean
-   is (Self.Namespace /= null);
+     is (Self.Namespace /= null);
 
    ---------------------
    --  Get_Namespace  --
