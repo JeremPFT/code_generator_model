@@ -11,14 +11,16 @@ package body Model.Comment is
    ------------------
 
    procedure Initialize
-     (Self   : in out Object_T'Class;
-      Text   : in     String;
-      Header : in     String := "";
-      Footer : in     String := "";
-      Prefix : in     String := "";
-      Suffix : in     String := "")
+   (Self   : in out Object_T;
+    Text   : in     String;
+    Header : in     String := "";
+    Footer : in     String := "";
+    Prefix : in     String := "";
+    Suffix : in     String := "")
    is
    begin
+      Parent_T (Self).Initialize;
+
       Self.Text   := new String'(Text);
       Self.Header := new String'(Header);
       Self.Footer := new String'(Footer);
@@ -31,12 +33,12 @@ package body Model.Comment is
    --------------
 
    function Create
-     (Text   : in String;
-      Header : in String := "";
-      Footer : in String := "";
-      Prefix : in String := "";
-      Suffix : in String := "")
-     return not null access Object_T'Class
+   (Text   : in String;
+    Header : in String := "";
+    Footer : in String := "";
+    Prefix : in String := "";
+    Suffix : in String := "")
+   return not null access Object_T'Class
    is
       Result : constant Comment_Class_T := new Object_T;
    begin
@@ -58,12 +60,12 @@ package body Model.Comment is
 
    not overriding
    function Get_Text
-     (Self : in Object_T)
-     return String
-     is (if Self.Text = null then
-            ""
-         else
-            Self.Text.all);
+   (Self : in Object_T)
+   return String
+   is (if Self.Text = null then
+          ""
+       else
+          Self.Text.all);
 
    --------------------------
    --  Get_Formatted_Text  --
@@ -71,8 +73,8 @@ package body Model.Comment is
 
    not overriding
    function Get_Formatted_Text
-     (Self : in Object_T)
-     return String
+   (Self : in Object_T)
+   return String
    is
       package Maps renames Ada.Strings.Maps;
       package Strings renames Ada.Strings;
@@ -80,12 +82,12 @@ package body Model.Comment is
       package Str_U renames Ada.Strings.Unbounded;
 
       function "&"
-        (Left  : Str_U.Unbounded_String;
-         Right : String) return Str_U.Unbounded_String
+      (Left  : Str_U.Unbounded_String;
+       Right : String) return Str_U.Unbounded_String
         renames Str_U."&";
 
       New_Lines_Set : constant Maps.Character_Set :=
-        Maps.To_Set (Latin_1.CR & Latin_1.LF);
+      Maps.To_Set (Latin_1.CR & Latin_1.LF);
 
       Test : Strings.Membership renames Strings.Outside;
 
@@ -95,13 +97,13 @@ package body Model.Comment is
       From        : Natural := 1;
 
       Header : constant String :=
-        (if Self.Header = null then "" else Self.Header.all);
+      (if Self.Header = null then "" else Self.Header.all);
       Footer : constant String :=
-        (if Self.Footer = null then "" else Self.Footer.all);
+      (if Self.Footer = null then "" else Self.Footer.all);
       Prefix : constant String :=
-        (if Self.Prefix = null then "" else Self.Prefix.all);
+      (if Self.Prefix = null then "" else Self.Prefix.all);
       Suffix : constant String :=
-        (if Self.Suffix = null then "" else Self.Suffix.all);
+      (if Self.Suffix = null then "" else Self.Suffix.all);
       Text : constant String := Self.Get_Text;
 
    begin
@@ -125,9 +127,9 @@ package body Model.Comment is
             Subtext : constant String := Text (First .. Last);
          begin
             Result_Unb := Result_Unb
-              & Prefix
-              & Subtext
-              & Suffix;
+            & Prefix
+            & Subtext
+            & Suffix;
          end;
 
          if Last /= Text'Length then
@@ -148,8 +150,8 @@ package body Model.Comment is
 
    not overriding
    procedure Annotates
-     (Self    : in out          Object_T;
-      Element : not null access constant Model.Element.Object_T'Class)
+   (Self    : in out          Object_T;
+    Element : not null access constant Model.Element.Object_T'Class)
    is
    begin
       Self.Annotated_Elements.Append (Element);

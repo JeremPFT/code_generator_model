@@ -9,15 +9,17 @@ project Model_Tests is
 
   Src_Dirs := Src_Dirs & "./src_lib";
 
-  Src_Dirs := Src_Dirs & "../utils_assertions/src";
+  Src_Dirs := Src_Dirs & "../utils/src_lib";
 
-  Src_Dirs := Src_Dirs & "../aunit/include/aunit/framework";
-  Src_Dirs := Src_Dirs & "../aunit/include/aunit/containers";
-  Src_Dirs := Src_Dirs & "../aunit/include/aunit/reporters";
-  Src_Dirs := Src_Dirs & "../aunit/include/aunit/framework";
-  Src_Dirs := Src_Dirs & "../aunit/include/aunit/framework/zfpexception";
-  Src_Dirs := Src_Dirs & "../aunit/include/aunit/framework/calendar";
-  Src_Dirs := Src_Dirs & "../aunit/include/aunit/framework/nativememory";
+  AUnit_Path := "../aunit/include/aunit/";
+
+  Src_Dirs := Src_Dirs & (AUnit_Path & "framework");
+  Src_Dirs := Src_Dirs & (AUnit_Path & "containers");
+  Src_Dirs := Src_Dirs & (AUnit_Path & "reporters");
+  Src_Dirs := Src_Dirs & (AUnit_Path & "framework");
+  Src_Dirs := Src_Dirs & (AUnit_Path & "framework/zfpexception");
+  Src_Dirs := Src_Dirs & (AUnit_Path & "framework/calendar");
+  Src_Dirs := Src_Dirs & (AUnit_Path & "framework/nativememory");
 
   for Source_Dirs use Src_Dirs;
 

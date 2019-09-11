@@ -28,15 +28,16 @@ package Model.Named_Element is
    --  Initialize  --
    ------------------
 
+   not overriding
    procedure Initialize
-     (Self : in out Object_T'Class;
-      Name : in     String := "");
+   (Self : in out Object_T;
+    Name : in     String);
 
    pragma Precondition
-     (Name /= "");
+   (Name /= "");
 
    pragma Postcondition
-     (Self.Get_Name = Name);
+   (Self.Get_Name = Name);
 
    -----------------------------------------------------------------------------
    --  queries
@@ -48,8 +49,8 @@ package Model.Named_Element is
 
    not overriding
    function Get_Name
-     (Self : in Object_T)
-     return String;
+   (Self : in Object_T)
+   return String;
 
    ---------------------
    --  Has_Namespace  --
@@ -57,8 +58,8 @@ package Model.Named_Element is
 
    not overriding
    function Has_Namespace
-     (Self : in Object_T)
-     return Boolean;
+   (Self : in Object_T)
+   return Boolean;
 
    ---------------------
    --  Get_Namespace  --
@@ -66,11 +67,11 @@ package Model.Named_Element is
 
    --  not overriding
    function Get_Namespace
-     (Self : in Object_T)
-     return not null access constant Model.Namespace.Object_T'Class;
+   (Self : in Object_T)
+   return not null access constant Model.Namespace.Object_T'Class;
 
    pragma Precondition
-     (Self.Has_Namespace);
+   (Self.Has_Namespace);
 
    --------------------------
    --  Get_Qualified_Name  --
@@ -78,8 +79,8 @@ package Model.Named_Element is
 
    not overriding
    function Get_Qualified_Name
-     (Self : in Object_T)
-     return String;
+   (Self : in Object_T)
+   return String;
 
 private
 
@@ -104,9 +105,9 @@ private
 
    not overriding
    function Get_Name
-     (Self : in Object_T)
-     return String
-     is (if Self.Name = null then ""
-         else Self.Name.all);
+   (Self : in Object_T)
+   return String
+   is (if Self.Name = null then ""
+       else Self.Name.all);
 
 end Model.Named_Element;

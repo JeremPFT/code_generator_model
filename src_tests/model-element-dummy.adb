@@ -7,10 +7,10 @@ package body Model.Element.Dummy is
    ------------------
 
    procedure Initialize
-     (Self : in out Object_T'Class)
+   (Self : in out Object_T)
    is
    begin
-      Model.Element.Initialize (Self);
+      Initialize (Parent_T (Self));
    end Initialize;
 
    --------------
@@ -18,7 +18,7 @@ package body Model.Element.Dummy is
    --------------
 
    function Create
-     return not null access Object_T'Class
+   return not null access Object_T'Class
    is
       Result : constant Dummy_Class_T := new Object_T;
    begin

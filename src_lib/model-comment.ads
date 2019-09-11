@@ -39,7 +39,10 @@ package Model.Comment is
    --  types
    -----------------------------------------------------------------------------
 
-   type Object_T is new Model.Element.Object_T with private;
+   package Parent_Pkg renames Model.Element;
+   subtype Parent_T is Parent_Pkg.Object_T;
+
+   type Object_T is new Parent_T with private;
 
    -----------------------------------------------------------------------------
    --  initialization
@@ -50,36 +53,36 @@ package Model.Comment is
    ------------------
 
    procedure Initialize
-     (Self   : in out Object_T'Class;
-      Text   : in     String;
-      Header : in     String := "";
-      Footer : in     String := "";
-      Prefix : in     String := "";
-      Suffix : in     String := "");
+   (Self   : in out Object_T;
+    Text   : in     String;
+    Header : in     String := "";
+    Footer : in     String := "";
+    Prefix : in     String := "";
+    Suffix : in     String := "");
 
    pragma Precondition
-     (Text /= "");
+   (Text /= "");
 
    pragma Postcondition
-     (Self.Get_Text = Text);
+   (Self.Get_Text = Text);
 
    --------------
    --  Create  --
    --------------
 
    function Create
-     (Text   : in String;
-      Header : in String := "";
-      Footer : in String := "";
-      Prefix : in String := "";
-      Suffix : in String := "")
-     return not null access Object_T'Class;
+   (Text   : in String;
+    Header : in String := "";
+    Footer : in String := "";
+    Prefix : in String := "";
+    Suffix : in String := "")
+   return not null access Object_T'Class;
 
    pragma Precondition
-     (Text /= "");
+   (Text /= "");
 
    pragma Postcondition
-     (Create'Result.Get_Text = Text);
+   (Create'Result.Get_Text = Text);
 
    -----------------------------------------------------------------------------
    --  queries
@@ -91,8 +94,8 @@ package Model.Comment is
 
    not overriding
    function Get_Text
-     (Self : in Object_T)
-     return String;
+   (Self : in Object_T)
+   return String;
 
    --------------------------
    --  Get_Formatted_Text  --
@@ -100,8 +103,8 @@ package Model.Comment is
 
    not overriding
    function Get_Formatted_Text
-     (Self : in Object_T)
-     return String;
+   (Self : in Object_T)
+   return String;
 
    -----------------------------------------------------------------------------
    --  commands
@@ -109,14 +112,14 @@ package Model.Comment is
 
    not overriding
    procedure Annotates
-     (Self    : in out          Object_T;
-      Element : not null access constant Model.Element.Object_T'Class);
+   (Self    : in out          Object_T;
+    Element : not null access constant Model.Element.Object_T'Class);
 
    pragma Precondition
-     (not Self.Is_Owned_By (Parent => Element));
+   (not Self.Is_Owned_By (Parent => Element));
 
    pragma Postcondition
-     (Self.Is_Owned_By (Parent => Element));
+   (Self.Is_Owned_By (Parent => Element));
 
 private
 

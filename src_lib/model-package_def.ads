@@ -8,7 +8,9 @@ package Model.Package_Def is
 
    package Parent_Pkg renames Model.Named_Element;
 
-   type Object_T is new Parent_Pkg.Object_T with private;
+   subtype Parent_T is Parent_Pkg.Object_T;
+
+   type Object_T is new Parent_T with private;
 
    -----------------------------------------------------------------------------
    --  initilization
@@ -18,21 +20,38 @@ package Model.Package_Def is
    --  Initialize  --
    ------------------
 
+   not overriding
    procedure Initialize
-     (Self              : in out Object_T'Class;
-      Name              : in     String := "";
-      Dependancies_Todo : in     String := "";
-      Classes_Todo      : in     String := "");
+   (Self              : in out Object_T;
+    Name              : in     String;
+    Dependancies_Todo : in     String := "";
+    Classes_Todo      : in     String := "");
 
    pragma Precondition
-     (Name /= "");
+   (Name /= "");
 
    pragma Postcondition
-     (Self.Get_Name = Name);
+   (Self.Get_Name = Name);
+
+   --------------
+   --  Create  --
+   --------------
+
+   function Create
+   (Name              : in     String;
+    Dependancies_Todo : in     String := "";
+    Classes_Todo      : in     String := "")
+   return not null access Object_T'Class;
+
+   pragma Precondition
+   (Name /= "");
+
+   pragma Postcondition
+   (Create'Result.Get_Name = Name);
 
 private
 
    type Object_T is new Parent_Pkg.Object_T with
-     null record;
+   null record;
 
 end Model.Package_Def;

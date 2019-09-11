@@ -3,7 +3,7 @@ with AUnit.Assertions; use AUnit.Assertions;
 with Model.Comment;
 with Model.Types.Comment;
 
-with Error_Expected;
+with Assertions.Error_Expected;
 
 package body Model.Element.Tests is
 
@@ -19,7 +19,7 @@ package body Model.Element.Tests is
 
    not overriding
    procedure Test_Initialization
-     (Test : in out Test_Fixture)
+   (Test : in out Test_Fixture)
    is
       pragma Unreferenced (Test);
    begin
@@ -32,7 +32,7 @@ package body Model.Element.Tests is
 
    not overriding
    procedure Test_Add_Comment
-     (Test : in out Test_Fixture)
+   (Test : in out Test_Fixture)
    is
    begin
       Comment_1 := Model.Comment.Create (Comment_1_Text);
@@ -48,7 +48,7 @@ package body Model.Element.Tests is
 
    not overriding
    procedure Test_Get_Comment_Nominal
-     (Test: in out Test_Fixture)
+   (Test: in out Test_Fixture)
    is
    begin
       Comment_1 := Model.Comment.Create (Comment_1_Text);
@@ -67,7 +67,7 @@ package body Model.Element.Tests is
 
    not overriding
    procedure Test_Get_Comment_Out_Of_Bound
-     (Test: in out Test_Fixture)
+   (Test: in out Test_Fixture)
    is
       Error_Found: Boolean := False;
    begin
@@ -78,11 +78,14 @@ package body Model.Element.Tests is
          Comment := Test.Fixture.Get_Comment (Index => 1);
          pragma Warnings (On, "assigned but never");
       exception
-        when E : others =>
-           Error_Found := True;
-           Error_Expected (Error      => E,
-                           File       => "model-element-tests.adb",
-                           Subprogram => "Test_Get_Comment_Out_Of_Bound");
+      when E : others =>
+         Error_Found := True;
+
+         Assertions.Error_Expected
+         (Error      => E,
+          File       => "model-element-tests.adb",
+          Subprogram => "Test_Get_Comment_Out_Of_Bound");
+
       end;
 
       Assert (Error_Found, "no raised error");
