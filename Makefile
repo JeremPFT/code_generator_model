@@ -21,7 +21,7 @@ clean::
 	$(CLEAN) model_lib.gpr
 	$(CLEAN) model_tests.gpr
 
-run_tests: compil_lib compil_tests
+run_tests: compil_tests
 	${HOME}/tmp/bin/$(EXEC)
 
 gnattest: compil_lib
