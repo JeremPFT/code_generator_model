@@ -73,12 +73,12 @@ package body Model.Project is
          then Self.Output_Directory.all
          else "");
 
-   --------------------------
-   --  Number_Of_Packages  --
-   --------------------------
+   ---------------------
+   --  Package_Count  --
+   ---------------------
 
    not overriding
-   function Number_Of_Packages
+   function Package_Count
      (Self : in Object_T)
      return Natural
      is (Natural (Self.Owned_Packages.Length));
@@ -94,7 +94,7 @@ package body Model.Project is
      return not null access Model.Package_Def.Object_T'Class
    is
    begin
-      if Index > Self.Number_Of_Packages then
+      if Index > Self.Package_Count then
          raise Out_Of_Bound;
       end if;
 

@@ -12,17 +12,17 @@ package body Model.Namespace is
       return Self.Get_Name;
    end Get_Qualified_Name;
 
-   -------------------------------
-   --  Number_Of_Owned_Members  --
-   -------------------------------
+   --------------------------
+   --  Owned_Member_Count  --
+   --------------------------
 
    overriding
-   function Number_Of_Owned_Members
+   function Owned_Member_Count
      (Self : in Object_T)
      return Natural
    is begin
       return Natural (Self.Owned_Members.Length);
-   end Number_Of_Owned_Members;
+   end Owned_Member_Count;
 
    ------------------------
    --  Get_Owned_Member  --
@@ -34,7 +34,7 @@ package body Model.Namespace is
       Index : in Positive)
      return not null access Named_Element.Object_T'Class
    is begin
-      if Index > Self.Number_Of_Owned_Members then
+      if Index > Self.Owned_Member_Count then
          raise Out_Of_Bound;
       end if;
 

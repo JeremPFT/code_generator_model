@@ -23,7 +23,7 @@ package Model.Project is
    pragma Postcondition
      (Self.Get_Name = Name
         and then Self.Get_Output_Directory = Output_Directory
-        and then Self.Number_Of_Packages = Integer (Package_List.Length));
+        and then Self.Package_Count = Integer (Package_List.Length));
 
    --------------
    --  Create  --
@@ -42,7 +42,7 @@ package Model.Project is
    pragma Postcondition
      (Create'Result.Get_Name = Name
         and then Create'Result.Get_Output_Directory = Output_Directory
-        and then Create'Result.Number_Of_Packages = Integer (Package_List.Length));
+        and then Create'Result.Package_Count = Integer (Package_List.Length));
 
    ----------------
    --  Get_Name  --
@@ -62,12 +62,12 @@ package Model.Project is
      (Self : in Object_T)
      return String;
 
-   --------------------------
-   --  Number_Of_Packages  --
-   --------------------------
+   ---------------------
+   --  Package_Count  --
+   ---------------------
 
    not overriding
-   function Number_Of_Packages
+   function Package_Count
      (Self : in Object_T)
      return Natural;
 
@@ -82,7 +82,7 @@ package Model.Project is
      return not null access Model.Package_Def.Object_T'Class;
 
    pragma Precondition
-     (Index <= Self.Number_Of_Packages);
+     (Index <= Self.Package_Count);
 
 private
 

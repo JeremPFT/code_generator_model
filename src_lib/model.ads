@@ -15,8 +15,8 @@ package Model is
    EOL      : String renames EOL_Dos;
 
    Out_Of_Bound : exception;
-   --  raised by Get_Comment when Index > Number_Of_Comments
-   --  raised by Get_Owned_Element when Index > Number_Of_Owned_Elements
+   --  raised by Get_Comment when Index > Comment_Count
+   --  raised by Get_Owned_Element when Index > Owned_Element_Count
    ----------------------------------------------------------------------------
 
 end Model;

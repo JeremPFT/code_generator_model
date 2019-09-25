@@ -7,36 +7,36 @@ package body Model.Element is
    ------------------
 
    procedure Initialize
-   (Self : in out Object_T)
+     (Self : in out Object_T)
    is
    begin
       Self.Owned_Comments.Clear;
       Self.Owned_Elements.Clear;
    end Initialize;
 
-   -------------------------
-   -- Number_Of_Comments  --
-   -------------------------
+   --------------------
+   -- Comment_Count  --
+   --------------------
 
-   function Number_Of_Comments
-   (Self : in Object_T)
-   return Natural
+   function Comment_Count
+     (Self : in Object_T)
+     return Natural
    is
    begin
       return Natural (Self.Owned_Comments.Length);
-   end Number_Of_Comments;
+   end Comment_Count;
 
    -------------------
    --  Get_Comment  --
    -------------------
 
    function Get_Comment
-   (Self  : in Object_T;
-    Index : in Positive)
-   return not null access Model.Comment.Object_T'Class
+     (Self  : in Object_T;
+      Index : in Positive)
+     return not null access Model.Comment.Object_T'Class
    is
    begin
-      if Index > Self.Number_Of_Comments then
+      if Index > Self.Comment_Count then
          raise Out_Of_Bound;
       end if;
 
@@ -49,11 +49,11 @@ package body Model.Element is
 
    not overriding
    procedure Add_Comment
-   (Self    : in out Object_T;
-    Comment : not null access constant Model.Comment.Object_T'Class)
+     (Self    : in out Object_T;
+      Comment : not null access constant Model.Comment.Object_T'Class)
    is
    begin
-      if Self.Number_Of_Comments = Positive'Last then
+      if Self.Comment_Count = Positive'Last then
          raise Out_Of_Bound;
       end if;
 
@@ -65,8 +65,8 @@ package body Model.Element is
    -----------------
 
    function Has_Owner
-   (Self  : in Object_T)
-   return Boolean
+     (Self  : in Object_T)
+     return Boolean
    is
    begin
       return Self.Owner /= null;
@@ -78,9 +78,9 @@ package body Model.Element is
 
    not overriding
    function Owns_Comment
-   (Self    : in              Object_T;
-    Comment : not null access constant Model.Comment.Object_T'Class)
-   return Boolean
+     (Self    : in              Object_T;
+      Comment : not null access constant Model.Comment.Object_T'Class)
+     return Boolean
    is
    begin
       return Self.Owned_Comments.Contains (Comment);
@@ -92,9 +92,9 @@ package body Model.Element is
 
    not overriding
    function Owns_Element
-   (Self    : in              Object_T;
-    Element : not null access constant Object_T'Class)
-   return Boolean
+     (Self    : in              Object_T;
+      Element : not null access constant Object_T'Class)
+     return Boolean
    is
    begin
       return Self.Owned_Elements.Contains (Element);
@@ -106,9 +106,9 @@ package body Model.Element is
 
    not overriding
    function Is_Owned_By
-   (Self   : in              Object_T;
-    Parent : not null access constant Object_T'Class)
-   return Boolean
+     (Self   : in              Object_T;
+      Parent : not null access constant Object_T'Class)
+     return Boolean
    is
       Obj_Access : constant access constant Object_T'Class := Self'Access;
    begin
@@ -120,8 +120,8 @@ package body Model.Element is
    -----------------
 
    function Get_Owner
-   (Self  : in Object_T)
-   return not null access constant Object_T'Class
+     (Self  : in Object_T)
+     return not null access constant Object_T'Class
    is
    begin
       return Self.Owner;
@@ -132,46 +132,46 @@ package body Model.Element is
    -------------------------
 
    procedure Add_Owned_Element
-   (Self  : in out Object_T;
-    Child : not null access constant Object_T'Class)
+     (Self  : in out Object_T;
+      Child : not null access constant Object_T'Class)
    is
    begin
-      if Self.Number_Of_Owned_Elements = Positive'Last then
+      if Self.Owned_Element_Count = Positive'Last then
          raise Out_Of_Bound;
       end if;
 
       Self.Owned_Elements.Append (New_Item => Child);
    end Add_Owned_Element;
 
-   --------------------------------
-   --  Number_Of_Owned_Elements  --
-   --------------------------------
+   ---------------------------
+   --  Owned_Element_Count  --
+   ---------------------------
 
-   function Number_Of_Owned_Elements
-   (Self : in Object_T)
-   return Natural
+   function Owned_Element_Count
+     (Self : in Object_T)
+     return Natural
    is
    begin
       return Natural (Self.Owned_Elements.Length);
-   end Number_Of_Owned_Elements;
+   end Owned_Element_Count;
 
    -------------------------
    --  Get_Owned_Element  --
    -------------------------
 
    function Get_Owned_Element
-   (Self  : in Object_T;
-    Index : in Positive)
-   return not null access Object_T'Class
+     (Self  : in Object_T;
+      Index : in Positive)
+     return not null access Object_T'Class
    is
    begin
-      if Index > Self.Number_Of_Owned_Elements then
+      if Index > Self.Owned_Element_Count then
          raise Out_Of_Bound;
       end if;
 
       declare
          Tmp_Element : constant access Object_T'Class :=
-         Self.Owned_Elements (Index);
+           Self.Owned_Elements (Index);
       begin
          return Tmp_Element;
       end;

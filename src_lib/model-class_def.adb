@@ -29,19 +29,17 @@ package body Model.Class_Def is
       return Self.Namespace.Get_Qualified_Name;
    end Get_Qualified_Name;
 
-
-   -------------------------------
-   --  Number_Of_Owned_Members  --
-   -------------------------------
+   --------------------------
+   --  Owned_Member_Count  --
+   --------------------------
 
    overriding
-   function Number_Of_Owned_Members
+   function Owned_Member_Count
      (Self : in Object_T)
      return Natural
    is begin
-      return Self.Namespace.Number_Of_Owned_Members;
-   end Number_Of_Owned_Members;
-
+      return Self.Namespace.Owned_Member_Count;
+   end Owned_Member_Count;
 
    ------------------------
    --  Get_Owned_Member  --
@@ -55,7 +53,6 @@ package body Model.Class_Def is
    is begin
       return Self.Namespace.Get_Owned_Member (Index);
    end Get_Owned_Member;
-
 
    ------------------------
    --  Add_Owned_Member  --

@@ -46,12 +46,12 @@ package Model.Class_Def is
      (Self : in Object_T)
      return String;
 
-   -------------------------------
-   --  Number_Of_Owned_Members  --
-   -------------------------------
+   --------------------------
+   --  Owned_Member_Count  --
+   --------------------------
 
    overriding
-   function Number_Of_Owned_Members
+   function Owned_Member_Count
      (Self : in Object_T)
      return Natural;
 
@@ -63,10 +63,10 @@ package Model.Class_Def is
    function Get_Owned_Member
      (Self  : in Object_T;
       Index : in Positive)
-      return not null access Named_Element.Object_T'Class;
+     return not null access Named_Element.Object_T'Class;
 
    pragma Precondition
-     (Index <= Self.Number_Of_Owned_Members);
+     (Index <= Self.Owned_Member_Count);
 
    -----------------------------------------------------------------------------
    --  commands
@@ -85,8 +85,8 @@ package Model.Class_Def is
      (Child /= null);
 
    pragma Postcondition
-     (Self.Number_Of_Owned_Members = Self'Old.Number_Of_Owned_Members + 1
-        and then Self.Get_Owned_Member (Self.Number_Of_Owned_Members) = Child);
+     (Self.Owned_Member_Count = Self'Old.Owned_Member_Count + 1
+        and then Self.Get_Owned_Member (Self.Owned_Member_Count) = Child);
 
 private
 
@@ -95,7 +95,7 @@ private
    -----------------------------------------------------------------------------
 
    type Object_T is new Parent_Pkg.Object_T
-     and Model.Namespace.interface_T
+     and Model.Namespace.Interface_T
    with record
       Namespace : access Model.Namespace.Object_T;
    end record;

@@ -88,7 +88,7 @@ package body Model.Visitor.Printer is
    begin
       Self.Add ("[element]");
 
-      for J in 1 .. Object.Number_Of_Comments loop
+      for J in 1 .. Object.Comment_Count loop
          Self.Add (EOL & "-- " & Object.Get_Comment (J).Get_Text);
       end loop;
    end Visit_Element;
@@ -147,7 +147,7 @@ package body Model.Visitor.Printer is
 
    --    Self.Incr_Indent;
 
-   --    --  for I in 1 .. Object.Number_Of_Members loop
+   --    --  for I in 1 .. Object.Member_Count loop
    --    --    Object.Get_Member (I).Visit (Self);
    --    --  end loop;
 
@@ -174,7 +174,7 @@ package body Model.Visitor.Printer is
 
    --    Self.Incr_Indent;
 
-   --    for I in 1 .. Object.Number_Of_Parameters loop
+   --    for I in 1 .. Object.Parameter_Count loop
    --      Self.Visit_Parameter (Object.Get_Parameter (I).all);
    --    end loop;
 
@@ -193,7 +193,7 @@ package body Model.Visitor.Printer is
    --    Self.Add ("package " & Quote (Object.Get_Name) & EOL);
 
    --    declare
-   --      Number     : constant Natural := Object.Number_Of_Owned_Elements;
+   --      Number     : constant Natural := Object.Owned_Element_Count;
    --      Number_Img : constant String  := Number'Img (2 .. Number'Img'Length);
    --      Child : Model.Element.Class_T;
    --    begin
@@ -249,7 +249,7 @@ package body Model.Visitor.Printer is
    --    end if;
 
    --    declare
-   --      Number     : constant Natural := Object.Number_Of_Subprojects;
+   --      Number     : constant Natural := Object.Subproject_Count;
    --      Number_Img : constant String  := Number'Img (2 .. Number'Img'Length);
    --      Child : Model.Element.Class_T;
    --    begin
@@ -267,7 +267,7 @@ package body Model.Visitor.Printer is
    --    end;
 
    --    declare
-   --      Number     : constant Natural := Object.Number_Of_Owned_Elements;
+   --      Number     : constant Natural := Object.Owned_Element_Count;
    --      Number_Img : constant String  := Number'Img (2 .. Number'Img'Length);
    --      Child : Model.Element.Class_T;
    --    begin

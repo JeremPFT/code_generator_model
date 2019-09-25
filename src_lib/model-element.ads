@@ -21,24 +21,24 @@ package Model.Element is
    ------------------
 
    procedure Initialize
-   (Self : in out Object_T);
+     (Self : in out Object_T);
 
    pragma Postcondition
-   (Self.Number_Of_Comments = 0
-    and then Self.Number_Of_Owned_Elements = 0);
+     (Self.Comment_Count = 0
+        and then Self.Owned_Element_Count = 0);
 
    -----------------------------------------------------------------------------
    --  owned elements
    -----------------------------------------------------------------------------
 
-   --------------------------------
-   --  Number_Of_Owned_Elements  --
-   --------------------------------
+   ---------------------------
+   --  Owned_Element_Count  --
+   ---------------------------
 
    not overriding
-   function Number_Of_Owned_Elements
-   (Self : in Object_T)
-   return Natural;
+   function Owned_Element_Count
+     (Self : in Object_T)
+     return Natural;
 
    -------------------------
    --  Get_Owned_Element  --
@@ -46,12 +46,12 @@ package Model.Element is
 
    not overriding
    function Get_Owned_Element
-   (Self  : in Object_T;
-    Index : in Positive)
-   return not null access Object_T'Class;
+     (Self  : in Object_T;
+      Index : in Positive)
+     return not null access Object_T'Class;
 
    pragma Precondition
-   (Index <= Self.Number_Of_Owned_Elements);
+     (Index <= Self.Owned_Element_Count);
 
    --------------------
    --  Owns_Element  --
@@ -59,9 +59,9 @@ package Model.Element is
 
    not overriding
    function Owns_Element
-   (Self    : in              Object_T;
-    Element : not null access constant Object_T'Class)
-   return Boolean;
+     (Self    : in              Object_T;
+      Element : not null access constant Object_T'Class)
+     return Boolean;
 
    -------------------------
    --  Add_Owned_Element  --
@@ -69,28 +69,28 @@ package Model.Element is
 
    not overriding
    procedure Add_Owned_Element
-   (Self  : in out Object_T;
-    Child : not null access constant Object_T'Class);
+     (Self  : in out Object_T;
+      Child : not null access constant Object_T'Class);
 
    pragma Precondition
-   (Child /= null);
+     (Child /= null);
 
    pragma Postcondition
-   (Self.Number_Of_Owned_Elements = Self'Old.Number_Of_Owned_Elements + 1
-    and then Self.Get_Owned_Element (Self.Number_Of_Owned_Elements) = Child);
+     (Self.Owned_Element_Count = Self'Old.Owned_Element_Count + 1
+        and then Self.Get_Owned_Element (Self.Owned_Element_Count) = Child);
 
    -----------------------------------------------------------------------------
    --  owned comments
    -----------------------------------------------------------------------------
 
-   --------------------------
-   --  Number_Of_Comments  --
-   --------------------------
+   ---------------------
+   --  Comment_Count  --
+   ---------------------
 
    not overriding
-   function Number_Of_Comments
-   (Self : in Object_T)
-   return Natural;
+   function Comment_Count
+     (Self : in Object_T)
+     return Natural;
 
    -------------------
    --  Get_Comment  --
@@ -98,12 +98,12 @@ package Model.Element is
 
    not overriding
    function Get_Comment
-   (Self  : in Object_T;
-    Index : in Positive)
-   return not null access Model.Comment.Object_T'Class;
+     (Self  : in Object_T;
+      Index : in Positive)
+     return not null access Model.Comment.Object_T'Class;
 
    pragma Precondition
-   (Index <= Self.Number_Of_Comments);
+     (Index <= Self.Comment_Count);
 
    --------------------
    --  Owns_Comment  --
@@ -111,9 +111,9 @@ package Model.Element is
 
    not overriding
    function Owns_Comment
-   (Self    : in              Object_T;
-    Comment : not null access constant Model.Comment.Object_T'Class)
-   return Boolean;
+     (Self    : in              Object_T;
+      Comment : not null access constant Model.Comment.Object_T'Class)
+     return Boolean;
 
    -------------------
    --  Add_Comment  --
@@ -121,15 +121,15 @@ package Model.Element is
 
    not overriding
    procedure Add_Comment
-   (Self    : in out          Object_T;
-    Comment : not null access constant Model.Comment.Object_T'Class);
+     (Self    : in out          Object_T;
+      Comment : not null access constant Model.Comment.Object_T'Class);
 
    pragma Precondition
-   (not Self.Owns_Comment (Comment));
+     (not Self.Owns_Comment (Comment));
 
    pragma Postcondition
-   (Self.Number_Of_Comments = Self'Old.Number_Of_Comments + 1
-    and then Self.Get_Comment (Self.Number_Of_Comments) = Comment);
+     (Self.Comment_Count = Self'Old.Comment_Count + 1
+        and then Self.Get_Comment (Self.Comment_Count) = Comment);
 
    -----------------------------------------------------------------------------
    --  owner
@@ -141,8 +141,8 @@ package Model.Element is
 
    not overriding
    function Has_Owner
-   (Self  : in Object_T)
-   return Boolean;
+     (Self  : in Object_T)
+     return Boolean;
 
    -----------------
    --  Get_Owner  --
@@ -150,8 +150,8 @@ package Model.Element is
 
    not overriding
    function Get_Owner
-   (Self  : in Object_T)
-   return not null access constant Object_T'Class;
+     (Self  : in Object_T)
+     return not null access constant Object_T'Class;
 
    pragma Precondition (Self.Has_Owner);
 
@@ -161,9 +161,9 @@ package Model.Element is
 
    not overriding
    function Is_Owned_By
-   (Self   : in              Object_T;
-    Parent : not null access constant Object_T'Class)
-   return Boolean;
+     (Self   : in              Object_T;
+      Parent : not null access constant Object_T'Class)
+     return Boolean;
 
    ---------------------
    --  Must_Be_Owned  --
@@ -171,9 +171,9 @@ package Model.Element is
 
    not overriding
    function Must_Be_Owned
-   (Self:  in Object_T)
-   return Boolean
-   is (True);
+     (Self:  in Object_T)
+     return Boolean
+     is (True);
 
    --  -----------------------------------------------------------------------------
    --  --  visitor
@@ -192,10 +192,10 @@ private
 
    type Object_T is abstract tagged record
       Owned_Comments : Comment_Vector_T
-      := Comment_Vectors.Empty_Vector;
+        := Comment_Vectors.Empty_Vector;
 
       Owned_Elements : Element_Vector_T
-      := Element_Vectors.Empty_Vector;
+        := Element_Vectors.Empty_Vector;
 
       Owner : access Object_T'Class := null;
    end record;
