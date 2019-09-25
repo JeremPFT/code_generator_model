@@ -1,4 +1,5 @@
 with "../common/shared.gpr";
+with "../common/aunit_src.gpr";
 
 project Model_Tests is
 
@@ -11,15 +12,7 @@ project Model_Tests is
 
   Src_Dirs := Src_Dirs & "../utils/src_lib";
 
-  AUnit_Path := "../aunit/include/aunit/";
-
-  Src_Dirs := Src_Dirs & (AUnit_Path & "framework");
-  Src_Dirs := Src_Dirs & (AUnit_Path & "containers");
-  Src_Dirs := Src_Dirs & (AUnit_Path & "reporters");
-  Src_Dirs := Src_Dirs & (AUnit_Path & "framework");
-  Src_Dirs := Src_Dirs & (AUnit_Path & "framework/zfpexception");
-  Src_Dirs := Src_Dirs & (AUnit_Path & "framework/calendar");
-  Src_Dirs := Src_Dirs & (AUnit_Path & "framework/nativememory");
+  Src_Dirs := Src_Dirs & AUnit_Src.Src_Dirs;
 
   for Source_Dirs use Src_Dirs;
 
