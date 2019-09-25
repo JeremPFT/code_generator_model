@@ -1,31 +1,11 @@
-ifdef OS
-	EXT=.exe
-else
-	EXT=
-endif
-
-BUILD=gprbuild$(EXT)
-CLEAN=gprclean$(EXT)
-
+LIB_GPR=model_lib.gpr
+TEST_GPR=model_tests.gpr
 EXEC=model-tests-run$(EXT)
+RUN=${HOME}/tmp/bin/$(EXEC)
 
-all:  run_tests
+CMD=make -f ../common/Makefile LIB_GPR=$(LIB_GPR) TEST_GPR=$(TEST_GPR) RUN=$(RUN) EXEC=$(EXEC)
 
-compil_lib::
-	$(BUILD) -j4 -g -gnatef model_lib.gpr
+.PHONY : all compil_lib compil_tests clean run_tests
 
-compil_tests::
-	$(BUILD) -j4 -g -gnatef model_tests.gpr
-
-clean::
-	$(CLEAN) model_lib.gpr
-	$(CLEAN) model_tests.gpr
-
-run_tests: compil_tests
-	${HOME}/tmp/bin/$(EXEC)
-
-gnattest: compil_lib
-	gnattest$(EXT) -Pmodel_lib.gpr src_lib/model-element-dummy.ads
-
-xref::
-	gnatxref -a -aIsrc_lib -aIsrc_tests -aOout_lib -aOout_obj src_test/model-tests-run.adb
+all compil_lib compil_tests clean run_tests::
+	$(CMD) $@
