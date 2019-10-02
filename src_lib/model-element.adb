@@ -10,8 +10,7 @@ package body Model.Element is
      (Self : in out Object_T)
    is
    begin
-      Self.Owned_Comments.Clear;
-      Self.Owned_Elements.Clear;
+      null;
    end Initialize;
 
    --------------------

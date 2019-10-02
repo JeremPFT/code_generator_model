@@ -6,10 +6,12 @@ package body Model.Named_Element is
 
    not overriding
    procedure Initialize
-   (Self : in out Object_T;
-    Name : in     String)
+     (Self : in out Object_T;
+      Name : in     String)
    is
    begin
+      Parent.Initialize (Self);
+
       declare
          String_Object : constant String_Access_T := new String'(Name);
       begin
@@ -23,8 +25,8 @@ package body Model.Named_Element is
 
    not overriding
    function Get_Qualified_Name
-   (Self : in Object_T)
-   return String
+     (Self : in Object_T)
+     return String
    is
    begin
       return Self.Get_Name;
@@ -36,9 +38,9 @@ package body Model.Named_Element is
 
    not overriding
    function Has_Namespace
-   (Self : in Object_T)
-   return Boolean
-   is (Self.Namespace /= null);
+     (Self : in Object_T)
+     return Boolean
+     is (Self.Namespace /= null);
 
    ---------------------
    --  Get_Namespace  --
@@ -46,8 +48,8 @@ package body Model.Named_Element is
 
    not overriding
    function Get_Namespace
-   (Self : in Object_T)
-   return not null access constant Model.Namespace.Object_T'Class
+     (Self : in Object_T)
+     return not null access constant Model.Namespace.Object_T'Class
    is begin
       return Self.Namespace;
    end Get_Namespace;

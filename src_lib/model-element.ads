@@ -22,10 +22,17 @@ package Model.Element is
 
    procedure Initialize
      (Self : in out Object_T);
+   --  does nothing, defined for heriting classes
+
+   pragma Precondition
+     (Self.Comment_Count = 0
+        and then Self.Owned_Element_Count = 0
+        and then not Self.Has_Owner);
 
    pragma Postcondition
      (Self.Comment_Count = 0
-        and then Self.Owned_Element_Count = 0);
+        and then Self.Owned_Element_Count = 0
+        and then not Self.Has_Owner);
 
    -----------------------------------------------------------------------------
    --  owned elements
