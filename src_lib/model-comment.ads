@@ -1,11 +1,18 @@
+with Ada.Containers.Vectors;
+
 with Model.Element;
-with Model.Types.Element; use Model.Types.Element;
+--  with Model.Types.Element; use Model.Types.Element;
 
 package Model.Comment is
 
    --  A comment is a text owned by one or more elements.
    --
    --  A comment can be rendered using specific langage comment markup:
+   --
+   --  !!!!
+   --  TODO: maybe the formatting parameters should not be done in the model,
+   --  but in the rendering packages...
+   --  !!!!
    --
    --  - ada:
    --    --  comment text line 1
@@ -53,36 +60,36 @@ package Model.Comment is
    ------------------
 
    procedure Initialize
-   (Self   : in out Object_T;
-    Text   : in     String;
-    Header : in     String := "";
-    Footer : in     String := "";
-    Prefix : in     String := "";
-    Suffix : in     String := "");
+     (Self   : in out Object_T;
+      Text   : in     String;
+      Header : in     String := "";
+      Footer : in     String := "";
+      Prefix : in     String := "";
+      Suffix : in     String := "");
 
    pragma Precondition
-   (Text /= "");
+     (Text /= "");
 
    pragma Postcondition
-   (Self.Get_Text = Text);
+     (Self.Get_Text = Text);
 
    --------------
    --  Create  --
    --------------
 
    function Create
-   (Text   : in String;
-    Header : in String := "";
-    Footer : in String := "";
-    Prefix : in String := "";
-    Suffix : in String := "")
-   return not null access Object_T'Class;
+     (Text   : in String;
+      Header : in String := "";
+      Footer : in String := "";
+      Prefix : in String := "";
+      Suffix : in String := "")
+     return not null access Object_T'Class;
 
    pragma Precondition
-   (Text /= "");
+     (Text /= "");
 
    pragma Postcondition
-   (Create'Result.Get_Text = Text);
+     (Create'Result.Get_Text = Text);
 
    -----------------------------------------------------------------------------
    --  queries
@@ -94,8 +101,8 @@ package Model.Comment is
 
    not overriding
    function Get_Text
-   (Self : in Object_T)
-   return String;
+     (Self : in Object_T)
+     return String;
 
    --------------------------
    --  Get_Formatted_Text  --
@@ -103,8 +110,8 @@ package Model.Comment is
 
    not overriding
    function Get_Formatted_Text
-   (Self : in Object_T)
-   return String;
+     (Self : in Object_T)
+     return String;
 
    -----------------------------------------------------------------------------
    --  commands
@@ -112,16 +119,28 @@ package Model.Comment is
 
    not overriding
    procedure Annotates
-   (Self    : in out          Object_T;
-    Element : not null access constant Model.Element.Object_T'Class);
+     (Self    : in out          Object_T;
+      Element : not null access constant Model.Element.Object_T'Class);
 
    pragma Precondition
-   (not Self.Is_Owned_By (Parent => Element));
+     (not Self.Is_Owned_By (Parent => Element));
 
    pragma Postcondition
-   (Self.Is_Owned_By (Parent => Element));
+     (Self.Is_Owned_By (Parent => Element));
 
 private
+
+   type Comment_Access_T is access all Object_T;
+
+   type Comment_Class_Access_T is access all Object_T'Class;
+
+   type Element_Access_T is access all Element.Object_T;
+
+   type Element_Class_Access_T is access all Element.Object_T'Class;
+
+   package Element_Vectors is new Ada.Containers.Vectors
+     (Element_Type => Element_Class_Access_T,
+      Index_Type   => Positive);
 
    type Object_T is new Model.Element.Object_T
    with record
@@ -131,7 +150,8 @@ private
       Prefix : String_Access_T := null;
       Suffix : String_Access_T := null;
 
-      Annotated_Elements : Element_Vector_T := Element_Vectors.Empty_Vector;
+      Annotated_Elements : Element_Vectors.Vector :=
+        Element_Vectors.Empty_Vector;
    end record;
 
 end Model.Comment;

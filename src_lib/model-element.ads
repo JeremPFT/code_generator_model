@@ -1,8 +1,7 @@
+with Ada.Containers.Vectors;
+
 limited with Model.Comment;
 --  limited with Model.Visitor;
-
-with Model.Types.Element; use Model.Types.Element;
-with Model.Types.Comment; use Model.Types.Comment;
 
 package Model.Element is
 
@@ -24,15 +23,9 @@ package Model.Element is
      (Self : in out Object_T);
    --  does nothing, defined for heriting classes
 
-   pragma Precondition
-     (Self.Comment_Count = 0
-        and then Self.Owned_Element_Count = 0
-        and then not Self.Has_Owner);
+   pragma Precondition (Initial_State (Self'Access));
 
-   pragma Postcondition
-     (Self.Comment_Count = 0
-        and then Self.Owned_Element_Count = 0
-        and then not Self.Has_Owner);
+   pragma Postcondition (Initial_State (Self'Access));
 
    -----------------------------------------------------------------------------
    --  owned elements
@@ -195,13 +188,36 @@ package Model.Element is
    --    (Self   : in out Object_T;
    --     Object : in out Visitor.Object_T'Class);
 
+   function Initial_State
+     (Self : access constant Object_T)
+     return Boolean
+     is (Self.Comment_Count = 0
+           and then Self.Owned_Element_Count = 0
+           and then not Self.Has_Owner);
+
 private
 
+   type Element_Access_T is access all Object_T;
+
+   type Element_Class_Access_T is access all Object_T'Class;
+
+   package Element_Vectors is new Ada.Containers.Vectors
+     (Element_Type => Element_Class_Access_T,
+      Index_Type   => Positive);
+
+   type Comment_Access_T is access all Comment.Object_T;
+
+   type Comment_Class_Access_T is access all Comment.Object_T'Class;
+
+   package Comment_Vectors is new Ada.Containers.Vectors
+     (Element_Type => Comment_Class_Access_T,
+      Index_Type   => Positive);
+
    type Object_T is abstract tagged record
-      Owned_Comments : Comment_Vector_T
+      Owned_Comments : Comment_Vectors.Vector
         := Comment_Vectors.Empty_Vector;
 
-      Owned_Elements : Element_Vector_T
+      Owned_Elements : Element_Vectors.Vector
         := Element_Vectors.Empty_Vector;
 
       Owner : access Object_T'Class := null;

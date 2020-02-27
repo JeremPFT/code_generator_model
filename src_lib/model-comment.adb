@@ -2,8 +2,6 @@ with Ada.Strings.Maps;
 with Ada.Strings.Fixed;
 with Ada.Strings.Unbounded;
 
-with Model.Types.Comment; use Model.Types.Comment;
-
 package body Model.Comment is
 
    ------------------
@@ -40,7 +38,7 @@ package body Model.Comment is
       Suffix : in String := "")
      return not null access Object_T'Class
    is
-      Result : constant Comment_Class_T := new Object_T;
+      Result : constant Comment_Class_Access_T := new Object_T;
    begin
       Result.Initialize (Text   => Text,
                          Header => Header,
@@ -87,7 +85,7 @@ package body Model.Comment is
         renames Str_U."&";
 
       New_Lines_Set : constant Maps.Character_Set :=
-        Maps.To_Set (Latin_1.Cr & Latin_1.Lf);
+        Maps.To_Set (Latin_1.CR & Latin_1.LF);
 
       Test : Strings.Membership renames Strings.Outside;
 
@@ -133,7 +131,7 @@ package body Model.Comment is
          end;
 
          if Last /= Text'Length then
-            Result_Unb := Result_Unb & Eol;
+            Result_Unb := Result_Unb & EOL;
          end if;
       end loop;
 

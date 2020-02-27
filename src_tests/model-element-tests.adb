@@ -1,14 +1,15 @@
 with AUnit.Assertions; use AUnit.Assertions;
 
 with Model.Comment;
-with Model.Types.Comment;
 
 with Assertions.Error_Expected;
 
 package body Model.Element.Tests is
 
-   Comment_1 : Types.Comment.Comment_Class_T;
-   Comment_2 : Types.Comment.Comment_Class_T;
+   type Comment_Class_Access_T is access all Comment.Object_T'Class;
+
+   Comment_1 : Comment_Class_Access_T;
+   Comment_2 : Comment_Class_Access_T;
 
    Comment_1_Text : constant String := "abc";
    Comment_2_Text : constant String := "cde";
@@ -19,7 +20,7 @@ package body Model.Element.Tests is
 
    not overriding
    procedure Test_Initialization
-   (Test : in out Test_Fixture)
+     (Test : in out Test_Fixture)
    is
       pragma Unreferenced (Test);
    begin
@@ -32,7 +33,7 @@ package body Model.Element.Tests is
 
    not overriding
    procedure Test_Add_Comment
-   (Test : in out Test_Fixture)
+     (Test : in out Test_Fixture)
    is
    begin
       Comment_1 := Model.Comment.Create (Comment_1_Text);
@@ -48,7 +49,7 @@ package body Model.Element.Tests is
 
    not overriding
    procedure Test_Get_Comment_Nominal
-   (Test: in out Test_Fixture)
+     (Test: in out Test_Fixture)
    is
    begin
       Comment_1 := Model.Comment.Create (Comment_1_Text);
@@ -67,24 +68,24 @@ package body Model.Element.Tests is
 
    not overriding
    procedure Test_Get_Comment_Out_Of_Bound
-   (Test: in out Test_Fixture)
+     (Test: in out Test_Fixture)
    is
       Error_Found: Boolean := False;
    begin
       declare
          pragma Warnings (Off, "assigned but never");
-         Comment : Types.Comment.Comment_Class_T := null;
+         Comment : Comment_Class_Access_T := null;
       begin
          Comment := Test.Fixture.Get_Comment (Index => 1);
          pragma Warnings (On, "assigned but never");
       exception
-      when E : others =>
-         Error_Found := True;
+        when E : others =>
+           Error_Found := True;
 
-         Assertions.Error_Expected
-         (Error      => E,
-          File       => "model-element-tests.adb",
-          Subprogram => "Test_Get_Comment_Out_Of_Bound");
+           Assertions.Error_Expected
+             (Error      => E,
+              File       => "model-element-tests.adb",
+              Subprogram => "Test_Get_Comment_Out_Of_Bound");
 
       end;
 

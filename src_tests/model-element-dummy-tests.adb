@@ -1,5 +1,3 @@
-with Model.Types.Element; use Model.Types.Element;
-
 package body Model.Element.Dummy.Tests is
 
    ----------------------------------------------------------------------------
@@ -16,7 +14,7 @@ package body Model.Element.Dummy.Tests is
    is
       Fixture : constant access Object_T := Create;
    begin
-      Test.Fixture := Element_Class_T (Fixture);
+      Test.Fixture := Model.Element.Tests.Element_Class_Access_T (Fixture);
    end Set_Up;
 
 end Model.Element.Dummy.Tests;

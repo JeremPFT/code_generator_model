@@ -1,5 +1,7 @@
 with AUnit.Test_Fixtures;
 
+with Model.Element;
+
 package Model.Element.Tests is
 
    -----------------------------------------------------------------------------
@@ -8,9 +10,11 @@ package Model.Element.Tests is
 
    package Parent_Pkg renames AUnit.Test_Fixtures;
 
+   type Element_Class_Access_T is access all Element.Object_T'Class;
+
    type Test_Fixture is abstract new Parent_Pkg.Test_Fixture
    with record
-      Fixture : Element_Class_T := null;
+      Fixture : Element_Class_Access_T := null;
    end record;
 
    -----------------------------------------------------------------------------
